@@ -74,3 +74,4 @@ anaconda_projects/db/project_filebrowser.db
 .jupyter/desktop-workspaces/default-37a8.jupyterlab-workspace
 .jupyter/desktop-workspaces/default-37a8.jupyterlab-workspace
 *.jupyterlab-workspace
+/.jupyter
