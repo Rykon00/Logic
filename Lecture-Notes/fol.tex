@@ -94,13 +94,31 @@ arity of these symbols.
   \end{enumerate}
 \end{Definition}
 
+\exampleEng
+Next, we define the signature $\Sigma_G$ of group theory. Let
+\begin{enumerate}
+\item $\mathcal{V} := \{ x, y, z \}$ be the set of variables,
+\item $\mathcal{F} := \{ \mathtt{e}, \circ \}$ be the set of function symbols,
+\item $\mathcal{P} := \{\mathtt{=} \}$ be the set of predicate symbols,
+\item $\textsl{arity} := \bigl\{ \mathtt{e} \mapsto 0, \mathtt{\circ} \mapsto 2, = \mapsto 2 \bigr\}$
+      specifes the arities of function and predicate symbols.
+\end{enumerate}
+Then the signature $\Sigma_G$ of group theory is defined as follows:
+\\[0.2cm]
+\hspace*{1.3cm}
+$\Sigma_G := \langle \mathcal{V}, \mathcal{F}, \mathcal{P}, \textsl{arity} \rangle$.
+\eox
+\vspace{0.3cm}
+
 \noindent
 We use expressions built from variables and function symbols as identifiers for objects. These expressions are
 called \textcolor{blue}{terms}.\index{terms} The formal definition follows.
 
-\begin{Definition}[Terms, $\mathcal{T}_\Sigma$]
-  If $\Sigma = \langle \mathcal{V}, \mathcal{F}, \mathcal{P}, \textsl{arity} \rangle$ is a signature, then we define the set of \textcolor{blue}{$\Sigma$-terms},
-  \textcolor{blue}{$\mathcal{T}_\Sigma$} \index{$\mathcal{T}_\Sigma$} inductively:
+\begin{Definition}[Terms, $\mathcal{T}_\Sigma$] \hspace*{\fill} \\
+  If $\Sigma = \langle \mathcal{V}, \mathcal{F}, \mathcal{P}, \textsl{arity} \rangle$ is a signature, then we
+  define the set \textcolor{blue}{$\mathcal{T}_\Sigma$} \index{$\mathcal{T}_\Sigma$}  of
+  \textcolor{blue}{$\Sigma$-terms}, 
+  inductively:
   \begin{enumerate}
   \item For every variable $x \in \mathcal{V}$, we have that $x \in \mathcal{T}_\Sigma$. Thus, every variable is also a term.
   \item If $c \in \mathcal{F}$ is a $0$-ary function symbol,
@@ -157,7 +175,7 @@ nor quantifiers.
   is defined as follows:
   \begin{enumerate}
   \item $\verum \in \mathcal{A}_\Sigma$ and  $\falsum \in \mathcal{A}_\Sigma$.
-  \item If $p \in \mathcal{A}_\Sigma$ and $\textsl{arity}(p)= 0$, then $p \in \mathcal{A}_\Sigma$.
+  \item If $p \in \mathcal{P}$ and $\textsl{arity}(p)= 0$, then $p \in \mathcal{A}_\Sigma$.
 
         Therefore, propositional variables are atomic formulas.
   \item If $p \in \mathcal{P}$ is an $n$-ary predicate symbol such that $n > 0$ and, furthermore,  $n$ $\Sigma$-terms
@@ -236,6 +254,7 @@ $\Sigma$-term $t$ the set of variables contained in $t$.
   by induction on the structure of the term:
   \begin{enumerate}
     \item $\var(x) := \{ x \}$ \quad for all $x \in \mathcal{V}$,
+    \item $\var(c) := \{ \}$ \quad for all $c \in \mathcal{F}$ such that $\textsl{arity}(c) = 0$,
     \item $\var\bigl(f(t_1,\cdots,t_n)\bigr) := \var(t_1) \cup \cdots \cup \var(t_n)$.
           \eox
   \end{enumerate}
@@ -344,6 +363,65 @@ $\ds\bigl(\exists x \in M: F\bigr) \stackrel{\mathrm{def}}{\Longleftrightarrow} 
 \\[0.2cm]
 Finally, we agree that quantifiers bind more tightly than the operators $\wedge$, $\vee$, $\rightarrow$, and
 $\leftrightarrow$. 
+
+\exerciseEng
+\noindent \textbf{Consider the following signature for formalizing family relationships:}
+\begin{itemize}
+    \item \textbf{Variables:} $\{ u, v, w, x, y, z \}$.
+    \item \textbf{Function Symbols:}
+    \begin{itemize}
+        \item $\texttt{mother}(x)$: the mother of $x$.
+        \item $\texttt{father}(x)$: the father of $x$.
+    \end{itemize}
+    \item \textbf{Unary Predicates:}
+    \begin{itemize}
+        \item $\texttt{female}(x)$: $x$ is female.
+        \item $\texttt{male}(x)$: $x$ is male.
+    \end{itemize}
+    \item \textbf{Binary Predicates:}
+    \begin{itemize}
+    \item $\texttt{brother}(x,y)$: $x$ is a brother of $y$.
+    \item $\texttt{sister}(x,y)$: $x$ is a sister of $y$.
+    \item $\texttt{sibling}(x,y)$: $x$ is a sibling of $y$.
+    \item $\texttt{married}(x,y)$: $x$ is married to $y$.
+    \item $\texttt{grandmother}(x,y)$: $x$ is a grandmother of $y$.
+    \item $\texttt{grandfather}(x,y)$: $x$ is a grandfather of $y$.
+    \item $\texttt{grandchild}(x, y)$: $x$ is a grandchild of $y$,
+    \item $\texttt{uncle}(x,y)$: $x$ is an uncle of $y$.
+    \item $\texttt{aunt}(x,y)$: $x$ is an aunt of $y$.
+    \item $\texttt{cousin}(x,y)$: $x$ is a cousin of $y$.
+    \end{itemize}
+\end{itemize}
+In the following, your task is to \blue{define} certain predicates. In general, a \blue{definition} of an
+$n$-ary predicate $p$ has the form 
+\\[0.2cm]
+\hspace*{1.3cm}
+$\forall x_1, \cdots, x_n: \bigl(p(x_1,\cdots,x_n) \leftrightarrow F\bigr)$,
+\\[0.2cm]
+where $F$ is a formula that does not contain the predicate $p$.  In this exercise, this formula
+may only contain the function symbols \texttt{mother} and \texttt{father} and the predicate symbols \texttt{male} and
+\texttt{female}.  For the purpose of this exercise we make the simplifying assumption that
+every person is either femal or male.
+
+As an example, to \texttt{define} the predicate \texttt{brother} we can use the following formula:
+\\[0.2cm]
+\hspace*{1.3cm}
+$\forall x, y:\bigl(\mathtt{brother}(x, y) \leftrightarrow \mathtt{male}(x) \wedge \mathtt{father}(x)
+= \mathtt{father}(y) \wedge \mathtt{mother}(x) = \mathtt{mother}(y)\bigr)$
+\\[0.2cm]
+Define the following predicates:
+\begin{enumerate}[(a)]
+\item $\texttt{sister}(x, y)$,
+\item $\texttt{aunt}(x, y)$,
+\item $\mathtt{uncle}$,
+\item $\texttt{sibling}(x, y)$,
+\item $\texttt{grandfather}(x, y)$,
+\item $\texttt{grandmother}(x, y)$,
+\item $\texttt{grandchild}(x, y)$,
+\item $\texttt{cousin}(x, y)$.
+  \eox
+\end{enumerate}
+
 
 \section{Semantics of First-Order Logic \label{sec:semantik}}
 Next, we define the \blue{meaning} of the formulas. For this purpose, we introduce the concept of a
@@ -677,35 +755,35 @@ We proceed in four steps:
 In mathematics, a group $\mathcal{G}$ \index{Group} is defined as a triple of the form
 \\[0.2cm]
 \hspace*{1.3cm}
-$\mathcal{G} = \langle G, \mathrm{e}, * \rangle$
+$\mathcal{G} = \langle G, \mathrm{e}, \circ \rangle$
 \\[0.2cm]
 where:
 \begin{enumerate}
 \item $G$ is a set,
 \item $\mathrm{e}$ is an element of the set $G$, and
-\item $*: G \times G \rightarrow G$ is a binary function on $G$, which we henceforth refer to as the
+\item $\circ: G \times G \rightarrow G$ is a binary function on $G$, which we henceforth refer to as the
       \textcolor{blue}{multiplication} of the group.
 \item Moreover, the following three axioms hold:
       \begin{enumerate}
-      \item $\forall x: \mathrm{e} * x = x$,
+      \item $\forall x: \mathrm{e} \circ x = x$,
         
             $\mathrm{e}$ is a \textcolor{blue}{left-neutral} element with respect to multiplication.
-      \item $\forall x: \exists{y}: y * x = \mathrm{e}$,
+      \item $\forall x: \exists{y}: y \circ x = \mathrm{e}$
 
-            i.e., for every $x \in G$ there is a \textcolor{blue}{left-inverse} element.
-      \item $\forall x: \forall y: \forall z: (x * y) * z = x * (y * z)$,
+            for every $x \in G$ there is a \textcolor{blue}{left-inverse} element.
+      \item $\forall x: \forall y: \forall z: (x \circ y) \circ z = x \circ (y \circ z)$
 
-            i.e., the \textcolor{blue}{associative law} holds.
+            the operator $\circ$ is \blue{associative}.
 
       \item The group $\mathcal{G}$ is a \textcolor{blue}{commutative} group if and only if additionally the
             following axiom holds: 
         
-            $\forall x: \forall y: x * y = y * x$,
+            $\forall x: \forall y: x \circ y = y \circ x$
 
-            This is know as the law of commutativity.
+            This is know as the law of \blue{commutativity}.
             \eox
       \end{enumerate}
-      Note that the commutative law does not have to hold in a group.  It is only required for
+      Note that the law of commutativity does not have to hold in a group.  It is only required for
       \blue{commutative groups}. 
 \end{enumerate}
 
@@ -715,14 +793,14 @@ group theory as follows:
 \\[0.2cm]
 \hspace*{1.3cm}
 $\Sigma_G = 
-   \bigl\langle \{x,y,z\},\; \{\mathrm{e},*\},\; \{=\},\; \{ \pair(\mathrm{e},0), \pair(*,2), \pair(=,2) \} \bigr\rangle 
+   \bigl\langle \{x,y,z\},\; \{\mathrm{e},\circ\},\; \{=\},\; \{ \pair(\mathrm{e},0), \pair(\circ,2), \pair(=,2) \} \bigr\rangle 
 $.
 \\[0.2cm]
-Here, ``$\mathrm{e}$'' is a 0-arity function symbol representing the identity element, ``$*$'' is
+Here, ``$\mathrm{e}$'' is a 0-arity function symbol representing the identity element, ``$\circ$'' is
 the binary function symbol representing the group multiplication, and ``$=$'' is the binary predicate symbol to 
 denote equality. 
 We will use a parser for first-order logic formulas that does not support binary infix operators like
-``$*$'' or ``$=$''. With this parser, terms can only be specified in the form
+``$\circ$'' or ``$=$''. With this parser, terms can only be written in prefix form, i.e. as
 \\[0.2cm]
 \hspace*{1.3cm}
 $f(t_1,\cdots,t_n)$
@@ -733,13 +811,16 @@ represented by expressions in the form
 \hspace*{1.3cm}
 $p(t_1,\cdots,t_n)$
 \\[0.2cm]
-where $p$ is a predicate symbol. Variables are distinguished from function and predicate symbols
-in that variables begin with a lowercase letter, while function and
-predicate symbols begin with an uppercase letter. To be able to represent the formulas of group theory, we therefore agree on the following:
+where $p$ is a predicate symbol.  Variables are distinguished from function and predicate symbols
+by the fact that variables begin with a lowercase letter, while function and
+predicate symbols begin with an uppercase letter. To be able to represent the formulas of group theory, we
+therefore agree on the following: 
 \begin{enumerate}
-\item The neutral element $\mathrm{e}$ is written as $\mytt{E}()$.  
-\item For the operator $*$, we use the binary function symbol $\mytt{Multiply}$.
-      Thus, the expression $x*y$ is written as $\mytt{Multiply}(x, y)$.
+\item The neutral element $\mathrm{e}$ is written as $\mytt{E}()$.
+
+      The parser we use requires that  a constant is followed by parentheses.
+\item For the operator $\circ$, we use the binary function symbol $\mytt{Multiply}$.
+      Thus, the expression $x \circ y$ is written as $\mytt{Multiply}(x, y)$.
 \item The equality sign ``$=$'' is represented by the binary predicate symbol
       $\mytt{Equals}$. Thus, for example, the formula $x = y$ is written as $\mytt{Equals}(x, y)$.
 \end{enumerate}
@@ -1148,30 +1229,32 @@ The  script shown in Figure \ref{fig:isGroup.ipynb} can check whether the $\Sigm
 \noindent
 \textbf{Remark}: The program shown above is available as a Jupyter Notebook on GitHub at the address:
 \\[0.2cm]
-\hspace*{-1.0cm}
-\href{https://github.com/karlstroetmann/Logic/blob/master/Python/Chapter-5/01-FOL-Evaluation.ipynb}{\mytt{https://github.com/karlstroetmann/Logic/blob/master/Python/Chapter-5/01-FOL-Evaluation.ipynb}}
+\hspace*{0.0cm}
+\href{https://github.com/karlstroetmann/Logic/blob/master/Python/Chapter-5/01-FOL-Evaluation.ipynb}{\mytt{github.com/karlstroetmann/Logic/blob/master/Python/Chapter-5/01-FOL-Evaluation.ipynb}}
 \\[0.2cm]
-With this program, we can check whether a
+With this program we can check, whether a
 first-order formula is satisfied in a given finite structure. However, we cannot use it to check whether a
 formula is universally valid because, on one hand, we cannot apply the program if the $\Sigma$-structure has an
 infinite universe, and on the other hand, even the number of different finite $\Sigma$-structures we would need
 to test is infinitely large. \eox 
 
 \exerciseEng
-\begin{enumerate}
-\item Show that the formula
-      \\[0.2cm]
-      \hspace*{1.3cm}
-      $\forall x: \exists y: p(x,y) \rightarrow \exists y: \forall x: p(x,y)$
-      \\[0.2cm]
-      is \underline{not} universally valid.
+In the following exercises, you are given a number of different closed $\Sigma$-formulas $F$. For each of these
+formulas $F$ your task is to show that $F$ is \underline{not} universally valid.  In order to do so,
+you have to construct a $\Sigma$-structure $\mathcal{S}$ such that $\mathcal{S}(F) = \mathtt{False}$.
+\begin{enumerate}[(a)]
+\item $\forall x: \exists y: p(x,y) \rightarrow \exists y: \forall x: p(x,y)$
+\item $\forall x: \bigl(p(x) \lor q(x)\bigr) \rightarrow \bigl(\forall x: p(x) \lor \forall x: q(x)\bigr)$
+\item $\bigl(\exists x: p(x) \land \exists x: q(x)\bigr) \rightarrow \exists x: \bigl(p(x) \land q(x)\bigr)$
+\item $\exists x: \bigl(p(x) \rightarrow q(x)\bigr) \rightarrow \exists x: p(x) \rightarrow \exists x: q(x)$
+\end{enumerate}
+In each of these cases you should use the program shown previously in order to verify your claim
+that $\mathcal{S}(F) = \mathtt{False}$.
 
-      In order to do this, implement a suitable $\Sigma$-structure $\mathcal{S}$ in \textsl{Python}
-      such that this formula is false. 
-
-\item Consider how many different structures there are for the signature of group theory if we assume that the
+\exerciseEng
+\begin{enumerate}[(a)]
+\item How many different structures exist for the signature of group theory if we assume that the
       universe is of the form $\{1, \cdots, n\}$.
-
 \item Provide a \underline{satisfiable} first-order formula $F$ that is always false in a 
       $\Sigma$-structure $\mathcal{S} = \pair(\mathcal{U},\mathcal{J})$ if  the universe $\mathcal{U}$ is finite.
 
@@ -1188,7 +1271,7 @@ in order to solve a given problem, this problem is \blue{specified} and this \bl
 given as input to a problem solver which will then compute a solution to the problem.  Hence, the task of the
 programmer is much easier than it normally is: Instead of \blue{implementing} a program that solves a given problem,
 the programmer only has to \blue{specify} the problem precisely, she does not have to explicitely code an algorithm to find the
-solution.  Usually, the specification of a problem is much easier than the coding of an algorithm to solve the problem.  This approach works well for those problems
+solution.  Usually, the specification of a problem is much easier than the coding of an algorithm to solve the problem.  This approach works well for some problems
 that can be specified using first order logic.  The remainder of this section is structured as follows:
 \begin{enumerate}
 \item We first define \blue{constraint satisfaction problems} and provide two examples:
@@ -1199,8 +1282,10 @@ that can be specified using first order logic.  The remainder of this section is
 \item We discuss a simple constraint solver that is based on \blue{backtracking}.
 
       More efficient constraint solvers will be discussed in the lecture on artificial intelligence in the
-      $6^{\mathrm{th}}$ semester.
-\item Then we show how some puzzles can be solved using constraint programming.
+      $6^{\mathrm{th}}$ semester.  Furthermore, later in this chapter we will introduce
+      \href{https://www.microsoft.com/en-us/research/project/z3-3/}{Z3}, which is a very powerful
+      constraint solver developed by Microsoft.
+\item Finally, we demonstrate a number of puzzles that can be solved using constraint programming.
 \end{enumerate}
 
 \subsection{Constraint Satisfaction Problems}
@@ -1208,60 +1293,64 @@ Conceptually, a constraint satisfaction problem is given by a set of first order
 set of free variables.  Furthermore, a $\Sigma$-structure $\mathcal{S} = \langle \mathcal{U},
 \mathcal{J}\rangle $
 consisting of a universe $\mathcal{U}$ and the interpretation $\mathcal{J}$ of the function and predicate 
-symbols used in these formulas is assumed to be implicitly specified by the context of the problem.  The goal is 
-to find a variable assignment such that the given first-order formulas are evaluated as true.
+symbols used in these formulas is assumed to be specified by the context of the problem.  The goal is 
+to find a variable assignment such that the given first-order formulas are evaluated as true.  The formal
+definition follows.
 
 \begin{Definition}[CSP] \index{CSP} \hspace*{\fill} \linebreak
-Formally, a \blue{constraint satisfaction problem} \index{constraint satisfaction problem} (abbreviated as
-\textsc{Csp}) is defined as a triple 
+A \blue{constraint satisfaction problem} \index{constraint satisfaction problem} (abbreviated as
+\textsc{Csp}) is defined as a triple
 \\[0.2cm]
 \hspace*{1.3cm}
-$\mathcal{P} := \langle \mathtt{Vars}, \mathtt{Values}, \mathtt{Constraints} \rangle$
+$\mathbb{P} := \langle \Sigma, \mathcal{S}, \mathcal{C} \rangle$
 \\[0.2cm]
 where
 \begin{enumerate}
-\item $\mathtt{Vars}$ is a set of strings which serve as \blue{variables},
-\item $\mathtt{Values}$ is a set of \blue{values} that can be assigned to the variables in $\mathtt{Vars}$.
-
-      This set of values is assumed to be identical to the universe of the $\Sigma$-structure
-      $\mathcal{S} = \langle \mathcal{U}, \mathcal{J} \rangle$ that is given implicitly, i.e.~we have
-      \\[0.2cm]
-      \hspace*{1.3cm}
-      $\mytt{Values} = \mathcal{U}$.
-\item $\mathtt{Constraints}$ is a set of formulas from \blue{first order logic}.  Each of these formulas is
-      called a \blue{constraint} of $\mathcal{P}$.  \eox
+\item $\Sigma = \langle \mathcal{V}, \mathcal{F}, \mathcal{P}, \textsl{arity} \rangle$ is signature,
+\item $\mathcal{S} = \langle \mathcal{U}, \mathcal{J} \rangle$ is $\Sigma$-structure,
+\item $\mathcal{C} \subseteq \mathbb{F}_\Sigma$, i.e.~$\mathcal{C}$ is a set of $\Sigma$-formulas from
+      \blue{first order logic}.  These formulas are called the \blue{constraints}\index{constraints} of $\mathbb{P}$.  \eox
 \end{enumerate}
 \end{Definition}
 \vspace*{-0.3cm}
 
-\noindent
+In the following, we will often specify a constraint satisfaction problem by just specifying the variables
+$\mathcal{V}$,  the set of values $\mathcal{U}$ that these variables can take, and the set $\mathcal{C}$ of
+constraints.  In this case, we assume that the sets $\mathcal{F}$ and $\mathcal{P}$ of function and predicate
+symbols and their interpretation $\mathcal{J}$ are implicitly given.  In this case the constraint satisfaction
+problem is given as the triple 
+\\[0.2cm]
+\hspace*{1.3cm}
+$\mathbb{P} = \langle \mathcal{V}, \mathcal{U}, \mathcal{C} \rangle$.
+\\[0.2cm]
 Given a \textsc{Csp}
 \\[0.2cm]
 \hspace*{1.3cm}
- $\mathcal{P} = \langle \mathtt{Vars}, \mathtt{Values}, \mathtt{Constraints} \rangle$, 
+ $\mathbb{P} = \langle \mathcal{V}, \mathcal{U}, \mathcal{C} \rangle$, 
 \\[0.2cm]
-a \blue{variable assignment} for $\mathcal{P}$ is a function
-\\[0.2cm]
-\hspace*{1.3cm}
-$\mathcal{I}: \mathtt{Vars} \rightarrow \mathtt{Values}$.
-\\[0.2cm]
-A variable assignment $\mathcal{I}$ is a \blue{solution} of the \textsc{Csp} $\mathcal{P}$ \index{solution of a \textsc{Csp}}
-if, given the assignment $\mathcal{I}$, all constraints of $\mathcal{P}$ are satisfied, i.e.~we have
+a \blue{variable assignment} for $\mathbb{P}$ is a function
 \\[0.2cm]
 \hspace*{1.3cm}
-$\mathcal{S}(\mathcal{I}, f) = \mathtt{True}$ \quad for all $f \in \mathtt{Constraints}$.
+$\mathcal{I}: \mathcal{V} \rightarrow \mathcal{U}$.
+\\[0.2cm]
+A variable assignment $\mathcal{I}$ is a \blue{solution} of the \textsc{Csp}
+$\mathbb{P}= \langle \mathcal{V}, \mathcal{U}, \mathcal{C} \rangle$ \index{solution of a \textsc{Csp}}
+if, given the assignment $\mathcal{I}$, all constraints from $\mathcal{C}$ are satisfied, i.e.~we have
+\\[0.2cm]
+\hspace*{1.3cm}
+$\mathcal{S}(\mathcal{I}, f) = \mathtt{True}$ \quad for all $f \in \mathcal{C}$.
 \\[0.2cm]
 Finally, a \blue{partial variable assignment} \index{partial variable assignment} $\mathcal{B}$ for $\mathcal{P}$ is a function
 \\[0.2cm]
 \hspace*{1.3cm}
-$\mathcal{B}: \mathtt{Vars} \rightarrow \mathtt{Values} \cup \{ \Omega \}$ \quad where $\Omega$ denotes the undefined value.
+$\mathcal{B}: \mathcal{V} \rightarrow \mathcal{U} \cup \{ \Omega \}$ \quad where $\Omega$ denotes the undefined value.
 \\[0.2cm]
 Hence, a partial variable assignment does not assign values to all variables.  Instead, it assigns values only
-to a subset of the set $\mathtt{Vars}$.  The \blue{domain} $\mathtt{dom}(\mathcal{B})$ \index{domain} of a partial variable assignment $\mathcal{B}$ is the
+to a subset of the set $\mathcal{V}$.  The \blue{domain} $\mathtt{dom}(\mathcal{B})$ \index{domain} of a partial variable assignment $\mathcal{B}$ is the
 set of those variables that are assigned a value different from $\Omega$, i.e.~we define
 \\[0.2cm]
 \hspace*{1.3cm}
-$\mathtt{dom}(\mathcal{B}) := \bigl\{ x \in \mathtt{Vars} \mid \mathcal{B}(x) \not= \Omega \bigr\}$.
+$\mathtt{dom}(\mathcal{B}) := \bigl\{ x \in \mathcal{V} \mid \mathcal{B}(x) \not= \Omega \bigr\}$.
 \\[0.2cm]
 We proceed to illustrate the definitions given so far by presenting two examples.
 
@@ -1295,14 +1384,13 @@ available.  The question then is whether it is
 possible to colour the different states in a way that no two neighbouring states share the same colour.  This
 problem can be formalized as a constraint satisfaction problem.  To this end we define:
 \begin{enumerate}
-\item $\mytt{Vars} := \{ \mathtt{WA}, \mathtt{NT}, \mathtt{SA}, \mathtt{Q}, \mathtt{NSW}, \mathtt{V}, \mathtt{T} \}$,
-\item $\mytt{Values} := \{ \mytt{red}, \mytt{green}, \mytt{blue} \}$,
-\item $\mytt{Constraints} := $ \\[0.1cm]
-      \hspace*{1.3cm}
-      $\bigl\{ \mathtt{WA} \not= \mathtt{NT}, \mathtt{WA} \not= \mathtt{SA},
-                 \mathtt{NT} \not= \mathtt{SA}, \mathtt{NT} \not= \mathtt{Q},
-                 \mathtt{SA} \not= \mathtt{Q},  \mathtt{SA} \not= \mathtt{NSW}, \mathtt{SA} \not= \mathtt{V}, 
-                 \mathtt{Q}  \not= \mathtt{NSW},
+\item $\mathcal{V} := \{ \mathtt{WA}, \mathtt{NT}, \mathtt{SA}, \mathtt{Q}, \mathtt{NSW}, \mathtt{V}, \mathtt{T} \}$,
+\item $\mathcal{U} := \{ \mytt{red}, \mytt{green}, \mytt{blue} \}$,
+\item $\mathcal{C} :=  
+      \bigl\{ \mathtt{WA} \not= \mathtt{NT},\;\mathtt{WA} \not= \mathtt{SA},
+                 \mathtt{NT} \not= \mathtt{SA},\;\mathtt{NT} \not= \mathtt{Q},
+                 \mathtt{SA} \not= \mathtt{Q},\; \mathtt{SA} \not= \mathtt{NSW},\;\mathtt{SA} \not= \mathtt{V},\;
+                 \mathtt{Q}  \not= \mathtt{NSW},\;
                  \mathtt{NSW}\not= \mathtt{V}
        \bigr\}
        $.
@@ -1310,7 +1398,7 @@ problem can be formalized as a constraint satisfaction problem.  To this end we 
        The constraints do not mention the variable \texttt{T} for Tasmania, as Tasmania does not share a common
        border with any of the other states.
 \end{enumerate}
-Then $\mathcal{P} := \langle \mytt{Vars}, \mytt{Values}, \mytt{Constraints} \rangle$ is a constraint satisfaction problem.  
+Then $\mathbb{P} := \langle \mathcal{V}, \mathcal{U}, \mathcal{C} \rangle$ is a constraint satisfaction problem.  
 If we define the assignment $\mathcal{I}$ such that
 \begin{enumerate}
 \item $\mathcal{I}(\mathtt{WA}) = \mytt{red}$,
@@ -1345,13 +1433,13 @@ than 8 queens on the board.  Therefore, in order to model the eight queens probl
 problem, we will use the following set of variables:
 \\[0.2cm]
 \hspace*{1.3cm}
-$\mytt{Vars} := \{ \mytt{Q}_1, \mytt{Q}_2, \mytt{Q}_3, \mytt{Q}_4, \mytt{Q}_5, \mytt{Q}_6, \mytt{Q}_7,\mytt{Q}_8 \}$,
+$\mathcal{V} := \{ \mytt{Q}_1, \mytt{Q}_2, \mytt{Q}_3, \mytt{Q}_4, \mytt{Q}_5, \mytt{Q}_6, \mytt{Q}_7,\mytt{Q}_8 \}$,
 \\[0.2cm]
 where for $i \in \{1,\cdots,8\}$ the variable $\mytt{Q}_i$ specifies the column of the queen that is placed in
-row $i$.   As the columns run from one to eight, we define the set $\mytt{Values}$ as
+row $i$.   As the columns run from one to eight, we define the set $\mathcal{U}$ as
 \\[0.2cm]
 \hspace*{1.3cm}
-$\mytt{Values} := \{1,2,3,4,5,6,7,8\}$.
+$\mathcal{U} := \{1,2,3,4,5,6,7,8\}$.
 \\[0.2cm]
 Next, let us define the constraints.  There are two different types of constraints.
 \begin{enumerate}
@@ -1359,7 +1447,7 @@ Next, let us define the constraints.  There are two different types of constrain
       To capture these constraints, we define
       \\[0.2cm]
       \hspace*{1.3cm}
-      $\mytt{SameColumn} := \bigl\{ \mytt{Q}_i \not= \mytt{Q}_j \bigm| i \in \{1,\cdots,8\} \wedge j \in \{1,\cdots,8\} \wedge j < i \bigr\}$.
+      $\mytt{SameColumn} := \bigl\{ \mytt{Q}_i \not= \mytt{Q}_j \bigm| i,j \in \{1,\cdots,8\} \wedge j < i \bigr\}$.
       \\[0.2cm]
       Here the condition $i < j$ ensures that, for example, we have the constraint $\mytt{Q}_2 \not= \mytt{Q}_1$
       but not the constraint  $\mytt{Q}_1 \not= \mytt{Q}_2$, as the latter constraint would be redundant if
@@ -1375,17 +1463,17 @@ Next, let us define the constraints.  There are two different types of constrain
       columns of these queens.  To capture these constraints, we define
       \\[0.2cm]
       \hspace*{1.3cm}
-      $\mytt{SameDiagonal} := \bigl\{ |i  - j| \not= |\mytt{Q}_i - \mytt{Q}_j| \bigm| i \in \{1,\cdots,8\} \wedge j \in \{1,\cdots,8\} \wedge j < i \bigr\}$.
+      $\mytt{SameDiagonal} := \bigl\{ |i  - j| \not= |\mytt{Q}_i - \mytt{Q}_j| \bigm| i,j \in \{1,\cdots,8\} \wedge j < i \bigr\}$.
 \end{enumerate}
 Then, the set of constraints is defined as 
 \\[0.2cm]
 \hspace*{1.3cm}
-$\mytt{Constraints} := \mytt{SameColumn} \cup \mytt{SameDiagonal}$
+$\mathcal{C} := \mytt{SameColumn} \cup \mytt{SameDiagonal}$
 \\[0.2cm]
 and the eight queens problem can be stated as the constraint satisfaction problem
 \\[0.2cm]
 \hspace*{1.3cm}
-$\mathcal{P} := \langle \mytt{Vars}, \mytt{Values}, \mytt{Constraints} \rangle$.
+$\mathbb{P} := \langle \mathcal{V}, \mathcal{U}, \mathcal{C} \rangle$.
 \\[0.2cm]
 If we define the assignment $\mathcal{I}$ such that
 \\[0.2cm]
@@ -1422,7 +1510,7 @@ in \myFig{eight-queens.txt}.
 \end{figure}
 Later, when we implement procedures to solve  \textsc{Csp}s, we will represent variable assignments and partial
 variable assignments as dictionaries.  For example, the variable assignment $\mathcal{I}$ defined above would
-then be represented as the dictionary 
+then be represented in \textsl{Python} as the dictionary 
 \\[0.2cm]
 \hspace*{1.3cm}
 $\mathcal{I} = \bigl\{ \mytt{Q}_1:4,\, \mytt{Q}_2:8,\, \mytt{Q}_3:1,\, \mytt{Q}_4:3,\, 
@@ -1680,9 +1768,9 @@ assignment that satisfies all constraints of the given $\mytt{CSP}$.
 
 We still need to discuss the implementation of the auxiliary procedure $\mytt{isConsistent}$
 shown in \myFig{CSP-Solver.ipynb-isConsistent}.  This procedure takes a variable $\mytt{var}$, a $\mytt{value}$, a partial 
-$\mytt{Assignment}$ and a set of $\mytt{Constraints}$.  It is assumed that $\mytt{Assignment}$ is
-\blue{partially consistent} with respect to the set $\mytt{Constraints}$, i.e.~for every formula $\mytt{f}$
-occurring in $\mytt{Constraints}$ such that
+$\mytt{Assignment}$ and a set of constraints \texttt{Constraints}.  It is assumed that $\mytt{Assignment}$ is
+\blue{partially consistent} with respect to the set $\mathtt{Constraints}$, i.e.~for every formula $\mytt{f}$
+occurring in $\mathtt{Constraints}$ such that
 \\[0.2cm]
 \hspace*{1.3cm}
 $\mytt{vars}(\mytt{f}) \subseteq \mytt{dom}(\mytt{Assignment})$
@@ -1693,22 +1781,23 @@ $\mytt{isConsistent}$ is to check, whether the extended assignment
 \hspace*{1.3cm}
 $\mytt{NewAssign} \;\mytt{:=}\;\mytt{Assignment} \cup \{ \pair(\mytt{var}, \mytt{value}) \}$
 \\[0.2cm]
-that assigns $\mytt{value}$ to the variable $\mytt{var}$ is still partially consistent with $\mytt{Constraints}$. 
-To this end, the \mytt{for}-loop iterates over all $\mytt{Formula}$s in $\mytt{Constraints}$. 
+that assigns $\mytt{value}$ to the variable $\mytt{var}$ is still partially consistent with $\mathcal{C}$. 
+To this end, the \mytt{for}-loop iterates over all $\mytt{Formula}$s in $\mathcal{C}$. 
 However, we only have to check those $\mytt{Formula}$s that contain the variable $\mytt{var}$ and,
 furthermore, have the property that
 \\[0.2cm]
 \hspace*{1.3cm}
-$\mytt{Vars}(\mytt{Formula}) \subseteq \mytt{dom}(\mytt{NewAssign})$,
+$\mathcal{V}(\mytt{Formula}) \subseteq \mytt{dom}(\mytt{NewAssign})$,
 \\[0.2cm]
 i.e.~all variables occurring in $\mytt{Formula}$ need to have a value assigned in
 $\mytt{NewAssign}$.  The reasoning is as follows:
 \begin{enumerate}
 \item If $\mytt{var}$ does not occur in $\mytt{Formula}$, then adding $\mytt{var}$ to
-      $\mytt{Assignment}$ cannot change the result of evaluating $\mytt{Formula}$ and as
+      $\mytt{Assignment}$ cannot change the result of evaluating $\mytt{Formula}$: As
       $\mytt{Assignment}$ is assumed to be partially consistent with respect to $\mytt{Formula}$, 
       $\mytt{NewAssign}$ is also partially consistent with respect to $\mytt{Formula}$.
-\item If $\mytt{dom}(\mytt{NewAssign}) \not\subseteq \mytt{Vars}(\mytt{Formula})$, then $\mytt{Formula}$ can not be evaluated anyway. 
+\item If the formula $\mathtt{f}$ contains variables that have not been assigned yet, then \texttt{f} can not
+      be evaluated anyway.
 \end{enumerate}
 If we use backtracking, we can solve the 8 queens puzzle in less than a second.
 For the 8 queens puzzle the order in which variables are tried is not particularly important.  The reason
@@ -1781,26 +1870,26 @@ In order to solve this problem via constraint programming, we first introduce th
   A symbolic transition system is a 6-tuple
   \\[0.2cm]
   \hspace*{1.3cm}
-  $\mathcal{T} = \langle \mathtt{Vars}, \mathtt{Values}, \mathtt{Start}, \mathtt{Goal}, \mathtt{Invariant}, \mathtt{Transition} \rangle$
+  $\mathcal{T} = \langle \mathcal{V}, \mathcal{U}, \mathtt{Start}, \mathtt{Goal}, \mathtt{Invariant}, \mathtt{Transition} \rangle$
   \\[0.2cm]
   such that:
   \begin{enumerate}[(a)]
-  \item \texttt{Vars} is a set of variables.
+  \item $\mathcal{V}$ is a set of variables.
 
-        These variables are strings.  For every variable $x \in \texttt{Vars}$ there is a \blue{primed}
-        variable $x'$ which does not occur in \texttt{Vars}.  The set of these primed Variables is denoted as
-        $\mathtt{Vars}'$.
-  \item \texttt{Values} is a set of values that these variables can take.
+        These variables are strings.  For every variable $x \in \mathcal{V}$ there is a \blue{primed}
+        variable $x'$ which does not occur in $\mathcal{V}$.  The set of these primed variables is denoted as
+        $\mathcal{V}'$.
+  \item $\mathcal{U}$ is a set of values that these variables can take.
   \item \texttt{Start}, \texttt{Goal}, and \texttt{Invariant} are first-order formulas such that all free
-         variables occurring in these formulas are elements from the set \texttt{Vars}.
+         variables occurring in these formulas are elements from the set $\mathcal{V}$.
          \begin{itemize}
          \item \texttt{Start} describes the initial state of the transition system.
          \item \texttt{Goal} describes a state that should be reached by the transition system.
          \item \texttt{Invariant} is a formula that has to be true for every state of the transition system.
          \end{itemize}
   \item \texttt{Transition} is a first-order formula.  The free variables of this formula are elements of
-        the set $\texttt{Vars} \cup \mathtt{Vars}'$, i.e.~they are either variables from the set \texttt{Vars}
-        or they are primed variables from the set $\mathtt{Vars}'$.
+        the set $\mathcal{V} \cup \mathcal{V}'$, i.e.~they are either variables from the set $\mathcal{V}$
+        or they are primed variables from the set $\mathcal{V}'$.
 
         The formula \texttt{Transition} describes how the variables in the transition system change during a
         state transition.  The primed variables refer to the values of the original variables after the
@@ -1816,17 +1905,22 @@ and that has to remain true after every transition of our system.
 In order to clarify this definition we show how the \emph{missionaries and cannibals} problem can be formulated as
 a symbolic transition system.
 \begin{enumerate}[(a)]
-\item $\texttt{Vars} := \{ \mathtt{M}, \mathtt{C}, \mathtt{B} \}$.
+\item $\mathcal{V} := \{ \mathtt{M}, \mathtt{C}, \mathtt{B} \}$.
 
       The value of \texttt{M} is the number of missionaries on the western shore, the value of \texttt{C} is
       the number of infidels on that shore, while the value of \texttt{B} is the number of boats on the western
       shore.
-\item $\mathtt{Values} := \{ 0, 1, 2, 3 \}$.
+\item $\mathcal{U} := \{ 0, 1, 2, 3 \}$.
 \item $\texttt{Start} := (\mathtt{M} = 3 \wedge \mathtt{C} = 3 \wedge \mathtt{B} = 1)$.
+
+      At the beginning, there are 3 missionaries, 3 infidels, and 1 boat on the western shore.
 \item $\texttt{Goal}  := (\mathtt{M} = 0 \wedge \mathtt{C} = 0 \wedge B = 0)$.
+
+      The goal is to transfer everybody to the eastern shore.  If the goal is reached, the number of
+      missionaries, infidels, and boats on the western shore will be $0$.
 \item $\texttt{Invariant} := \bigl((\mathtt{M} = 3 \vee \mathtt{M} = 0 \vee \mathtt{M} = \mathtt{C}) \;\wedge\; \mathtt{B} \leq 1\bigr)$.
 
-      The first part of the invariant, i.e.~ the formulas $\mathtt{M} = 3 \vee \mathtt{M} = 0 \vee \mathtt{M} = \mathtt{C}$,
+      The first part of the invariant, i.e.~the formulas $\mathtt{M} = 3 \vee \mathtt{M} = 0 \vee \mathtt{M} = \mathtt{C}$,
       describes those states where the missionaries are not threatened by the infidels.
       \begin{itemize}
       \item $\mathtt{M} = 3$: All missionaries are on the western shore.
@@ -1834,11 +1928,12 @@ a symbolic transition system.
       \item $\mathtt{M} = \mathtt{C}$: On both shores the numbers of missionaries and cannibals are the same.
 
             If neither $\mathtt{M} = 3$ nor $\mathtt{M} = 0$ holds, then the number of missionaries and
-            cannibals have to be the same on the western shorem because if there were more missionaries on the
-            western shore than cannibals, then there would be less missionaries than cannibals on the eastern
-            shore and hence there would be a problem on the eastern shore.
+            cannibals have to be the same on the western shore, because if, for example, there were more
+            missionaries on the western shore than cannibals, then there would be less missionaries than
+            cannibals on the eastern shore and hence there would be a problem.
       \end{itemize}
-      The condition $\mathtt{B} \leq 1$ has to be true because there is just one boat.
+      The condition $\mathtt{B} \leq 1$ is needed because there is just one boat, but the set $\mathcal{U}$ of
+      values also includes the numbers $2$ and $3$.
 \item $\texttt{Transition} :=
       \begin{array}[t]{cl}
          &  \mathtt{B}' = 1 - \mathtt{B}   \\[0.2cm]
@@ -1920,7 +2015,7 @@ Figure \ref{fig:Missionaries-STS.ipynb} shows how the \emph{missionaries and can
 represented as a symbolic transition system in \textsl{Python}.  In the function \texttt{transition} 
 we use the following convention: Since variables cannot be primed in
 \textsl{Python} we append the character $\alpha$ to the names of the original
-variables from the set \texttt{Vars}, while we append $\beta$ to these names to get the primed versions of the
+variables from the set $\mathcal{V}$, while we append $\beta$ to these names to get the primed versions of the
 corresponding variable.
 
 
@@ -1981,9 +2076,9 @@ Figure \ref{fig:Missionaries-STS.ipynb-2} shows how we can turn the symbolic tra
        \hspace*{1.3cm}
        $L_1 + \cdots + L_k$,
        \\[0.2cm]
-       i.e.~it appends these lists and returns the result.
+       i.e.~it concatenates the lists that are elements of \texttt{Lol} and returns the resulting list.
 \item The function $\mathtt{missionaries\_CSP}(n)$ receives a natural number $n$ as its argument.
-       It returns a \textsc{Csp} that has a solution if there is a solution of the \emph{missionaries and cannibals}
+       It returns a \textsc{Csp} that has a solution iff there is a solution of the \emph{missionaries and cannibals}
        problem that crosses the river exactly $n$ times.  It uses the variables
        \\[0.2cm]
        \hspace*{1.3cm}
@@ -1999,9 +2094,8 @@ Figure \ref{fig:Missionaries-STS.ipynb-2} shows how we can turn the symbolic tra
        with $n$ crossings. As the number of crossings has to be odd, we increment $n$ by
        two at the end of the \texttt{while} loop.
 
-       The function \texttt{find\_solution} needs less than 2 seconds to finc the solution.
+       The function \texttt{find\_solution} needs less than 2 seconds to find the solution.
 \end{enumerate}
-\pagebreak
 
 \exerciseEng
 An agricultural economist has to sell a \blue{wolf}, a \blue{goat}, and a \blue{cabbage}
@@ -2013,6 +2107,11 @@ the agricultural economist leaves the goat with the cabbage, the goat will eat t
 cabbage.  Is it possible for the agricultural economist to develop a schedule that allows
 her to cross the river without either the goat or the cabbage being eaten?
 
+If you want to solve the puzzle yourself, you can do so at the following link:
+\\[0.2cm]
+\hspace*{1.3cm}
+\href{http://www.mathcats.com/explore/river/crossing.html}{http://www.mathcats.com/explore/river/crossing.html}
+\\[0.2cm]
 Encode this problem as a \blue{symbolic transition system} and then solve it with the help
 of the constraints solver developed earlier.  Assume that the
 problem can be solved with $n\in\mathbb{N}$ crossing of the river.  Use the following
@@ -2032,10 +2131,10 @@ You should start from the following notebook:
 \hspace*{-0.5cm}
 \href{https://github.com/karlstroetmann/Logic/blob/master/Python/Chapter-5/Wolf-Goat-Cabbage-STS.ipynb}{\texttt{github.com/karlstroetmann/Logic/blob/master/Python/Chapter-5/Wolf-Goat-Cabbage-STS.ipynb}}
 \eox
-s
+
 \section{The Z3 Solver}
-We conclude this chapter with a discussion of the solver
-\href{https://www.microsoft.com/en-us/research/project/z3-3/}{Z3}, which has beed developd
+We proceed with a discussion of the solver
+\href{https://www.microsoft.com/en-us/research/project/z3-3/}{Z3}, which has been developed
 at Microsoft.  Z3 implements most of the state-of-the-art constraint solving algorithms
 and is exceptionally powerful.  We introduce Z3 via a series of examples.
 
@@ -2057,11 +2156,11 @@ Strangely, in my old math book these assumptions have not been mentioned.
 
 We can now infer the number of children.
 If we denote the number of \blue{boys} by the variable $b$ and the number of \blue{girls}
-by the variable $g$, the problem statements are equivalent to the following equations:
-\begin{itemize}
-\item $b - 1 = g$.
-\item $2 \cdot (g - 1) = b$.
-\end{itemize}
+by the variable $g$, the problem statements are equivalent to the following two equations:
+\\[0.2cm]
+\hspace*{1.3cm}
+$b - 1 = g$ \quad and \quad $2 \cdot (g - 1) = b$.
+\\[0.2cm]
 Before we can start to solve this problem, we have to install \texttt{Z3} via \texttt{pip} using the following
 command:  
 \\[0.2cm]
@@ -2112,15 +2211,21 @@ interface of Z3.
       \\[0.2cm]
       \hspace*{1.3cm}
       \href{https://ericpony.github.io/z3py-tutorial/guide-examples.htm}{https://ericpony.github.io/z3py-tutorial/guide-examples.htm}
+      \\[0.2cm]
+      However, there is no need for you to consult this documentation as we will only use a very small part of
+      the \textsc{Api} of \texttt{Z3} in this lecture. 
 \item Lines 3 and 4 creates the \texttt{Z3} variables \mytt{boys} and \mytt{girls} as integer valued variables.
       The function \mytt{Int} takes one argument, which has to be a string.  This string is the name of the
       variable.  We store these variables in Python variables of the same name.  It would be possible to use
       different names for the Python variables, but that would be very confusing.
 \item Line 6 creates an object of the class \texttt{Solver}.  This is the constraint solver provided by
       \texttt{Z3}.
-\item Lines 8 and 9 add the constraints expressing that the number of girls is one less than the number of boys
-      and that my sister has twice as many brothers as she has sisters as constraints to the solver
-      \texttt{S}.
+    \item Lines 8 and 9 add the constraints expressing that
+      \begin{enumerate}[(a)]
+      \item the number of girls is one less than the number of boys \quad and 
+      \item that my sister has twice as many brothers as she has sisters 
+      \end{enumerate}
+      as constraints to the solver \texttt{S}.
 \item In line 10 the method \mytt{check} examines whether the given set of constraints is satisfiable.
       In general, this method returns one of the following results:
       \begin{enumerate}[(a)]
@@ -2136,7 +2241,6 @@ interface of Z3.
       rather as objects of the class \mytt{IntNumRef}, which is some internal class of \texttt{Z3} to store
       integers.  This class provides the method \mytt{as\_long} that converts its argument into an integer number.
 \end{enumerate}
-\pagebreak
 
 \exerciseEng
 Solve the following text problem using \texttt{Z3}.
@@ -2292,7 +2396,7 @@ Figure \ref{fig:Knight's Tour with Z3.ipynb-1} shows how we can formulate the pu
  
 \item We define the auxiliary functions \texttt{row} and \texttt{col} in line 3 and 4.
       Given a natural number $i$, the expression $\mathtt{row}(i)$ returns the string $\texttt{'R}i\texttt{'}$
-      and  $\mathtt{col}(i)$ returns the string  $\texttt{'C}i\texttt{'}$.  These strings in turn represent the
+      and  $\mathtt{col}(i)$ returns the string  $\texttt{'C}i\texttt{'}$.  These strings are the names of the
       variables $\mathtt{R}_i$ and $\mathtt{C}_i$.
 \item The function \texttt{is\_knight\_move} takes four parameters:
       \begin{enumerate}
@@ -2526,7 +2630,7 @@ the associated symbolic transition system using the constraint solver \texttt{Z3
       integers, although the set of values really is the set $\{0,1,2,3\}$.  We will later add appropriate
       inequalities to restrict these variables to this set.
 \item The definition of \texttt{start} and \texttt{goal} in line 6 and 9 are analogous the corresponding
-      definitions in \myfig{Missionaries-STS.ipynb}.  The describe that initially everybody and the boat is on
+      definitions in \myfig{Missionaries-STS.ipynb}.  They describe that initially everybody and the boat is on
       the eastern shore, while in the end everybody is on the western shore.
 
       Note that we have to use the \texttt{Z3} function \texttt{And} to form the conjunction of the conditions.
@@ -2618,6 +2722,10 @@ At this point you might well ask whether there is any benefit if we solve this p
 answer is that it is about efficiency.  While our simple backtracking solver took 1.5 seconds to solve this
 problem, \texttt{Z3} takes only 0.113 seconds to compute the solution.  In the following exercise you will
 solve a more complicated search problem which would take much too long to solve if we would only use backtracking.
+\pagebreak
+\vspace*{\fill}
+
+\pagebreak
 
 \exerciseEng
 The following puzzle is part of a recruitment test in Japan.
@@ -2634,6 +2742,10 @@ During the crossing, the following conditions have to be observed:
 \item Only the father, the mother, and the policeman are able to steer the boat.
 \end{enumerate}}
 \end{minipage}
+\vspace*{0.2cm}
+
+\noindent
+You can try your luck online \href{https://flashmuseum.org/iq-%E9%81%8E%E6%B2%B3%E9%81%8A%E6%88%B2/}{here}.
 
 \noindent
 Your task is to solve this puzzle by coding it as a symbolic transition system.  You should then solve the
@@ -2643,7 +2755,6 @@ Start with the following file:
 \hspace*{0.0cm}
 \href{https://github.com/karlstroetmann/Logic/blob/master/Python/Chapter-5/Japanese-Z3.ipynb}{https://github.com/karlstroetmann/Logic/blob/master/Python/Chapter-5/Japanese-Z3.ipynb}.
 \eox
-\pagebreak
 
 \exerciseEng
 The following puzzle offers a new twist to the river crossing puzzles encountered before, because we have to
