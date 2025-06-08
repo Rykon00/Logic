@@ -30,16 +30,16 @@ jobs:
       # 3) Geänderte Notebooks finden & strippen
       - name: Strip notebook outputs
         run: |
-          # alle .ipynb, die seit dem letzten Commit verändert wurden
           FILES=$(git diff --name-only HEAD^ HEAD | grep '\.ipynb$' || true)
           if [ -n "$FILES" ]; then
             echo "🧹 Stripping outputs from:"
             echo "$FILES" | sed 's/^/  - /'
+
             for nb in $FILES; do
-              nbstripout --install-and-strip "$nb"
+              # Nur diesen Befehl verwenden:
+              nbstripout "$nb"
             done
 
-            # 4) Bereinigte Notebooks commiten & pushen
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add $FILES
