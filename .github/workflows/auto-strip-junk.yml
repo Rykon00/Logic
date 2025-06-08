@@ -1,25 +1,25 @@
-# .github/workflows/auto-strip-junk.yml
 name: Auto-strip Notebook Outputs
 
-# Dieser Workflow läuft bei jedem Push auf main und bei jedem PR-Update
 on:
-  push:
-    branches: [ main ]
-  pull_request:
+  push: {}                # bei JEDEM Push auf irgendeinen Branch
+  pull_request:           # und bei jedem PR-Update
     types: [opened, synchronize, reopened]
 
 jobs:
   strip_and_push:
     runs-on: ubuntu-latest
+
     steps:
-      # 1) Checkout mit persist-credentials, damit wir später zurückpushen dürfen
-      - name: Check out code
+      # 1) Checkout mit voller History & Credentials
+      - name: Checkout code
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # braucht man, damit `git diff HEAD^ HEAD` funktioniert
+          fetch-depth: 0
+          # braucht man, damit später `git push` klappt
           persist-credentials: true
 
-      # 2) Python installieren und nbstripout
+      # 2) Python & nbstripout installieren
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -27,18 +27,19 @@ jobs:
       - name: Install nbstripout
         run: pip install nbstripout
 
-      # 3) Outputs entfernen
+      # 3) Geänderte Notebooks finden & strippen
       - name: Strip notebook outputs
         run: |
-          # Alle geänderten .ipynb seit dem letzten Commit finden:
+          # alle .ipynb, die seit dem letzten Commit verändert wurden
           FILES=$(git diff --name-only HEAD^ HEAD | grep '\.ipynb$' || true)
           if [ -n "$FILES" ]; then
-            echo "🧹 Stripping outputs in:" $FILES
+            echo "🧹 Stripping outputs from:"
+            echo "$FILES" | sed 's/^/  - /'
             for nb in $FILES; do
               nbstripout --install-and-strip "$nb"
             done
 
-            # 4) Änderungen committen und pushen
+            # 4) Bereinigte Notebooks commiten & pushen
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add $FILES
