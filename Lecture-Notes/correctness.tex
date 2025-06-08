@@ -360,7 +360,7 @@ of its arguments. \eox
     def root(n):
         if n == 0:
             return 0
-        r = isqrt(n // 4)
+        r = root(n // 4)
         if (2 * r + 1) ** 2 <= n:
             return 2 * r + 1
         else:
@@ -788,7 +788,7 @@ holds for every $s \in \mathbb{N}$.  You should use symbolic execution to verify
 \item What are the three steps that have to be executed to prove the correctness of the implementation of a
       \textsl{Python} function via computational induction?
 \item What are the two properties of \href{https://en.wikipedia.org/wiki/Euclidean_division}{Euclidean division} of natural numbers?
-\item Are you able to prove the correctness of an iterative implementation of Euclid's algorithm?
+\item Are you able to prove the correctness of a recursive implementation of Euclid's algorithm?
 \item What is the difference between a variable occurring in a mathematical formula and a variable occurring in
       a \textsl{Python} program?
 \item How do we transform a variable occurring in a \textsl{Python} program into a mathematical variable?
